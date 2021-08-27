@@ -1,4 +1,13 @@
 services:
+  gateway-service:
+    image: api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - "9999:9999"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - backend
   discovery-service:
     image: discovery-service:0.0.1-SNAPSHOT
     ports:
