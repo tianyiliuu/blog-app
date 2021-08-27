@@ -1,4 +1,15 @@
 services:
+  discovery-service:
+    image: discovery-service:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      backend:
+        aliases:
+          - "discoveryservice"
   blog-service:
     image: blog-service:0.0.1-SNAPSHOT
     ports:
