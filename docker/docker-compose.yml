@@ -1,0 +1,30 @@
+services:
+  blog-service:
+    image: blog-service:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - backend
+  database:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "someuser"
+      POSTGRES_PASSWORD: "somepassword"
+      POSTGRES_DB: "somedatabase"
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+networks:
+  backend:
+    driver: bridge
