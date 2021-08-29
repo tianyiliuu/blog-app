@@ -19,4 +19,9 @@ public class AuthorController {
     public Author get(@PathVariable String authorId) {
         return authorRepository.findById(authorId).orElse(null);
     }
+
+    @GetMapping("/test")
+    public String foo() {
+        return "hi!";
+    }
 }
